@@ -25,7 +25,7 @@ Makefile机制：比如像Android这样的大型工程，它的源文件有很�
 
 在Android源代码目录中，每个最小功能单位的目录下都会有一个Makefile文件，这样每一级向上，通过一个个的Makefile文件把整个源代码联系在一起。
 
-连接上手机，输入`adb shell`，然后再输入`ls`后我们能看到手机根目录里的一些文件，这些文件中我们比较关心的时system和data：
+连接上手机，输入`adb shell`，然后再输入`ls`后我们能看到手机根目录里的一些文件，这些文件中我们比较关心的是system和data：
 
 - /system/app/：存放系统App
 
@@ -63,7 +63,9 @@ Makefile机制：比如像Android这样的大型工程，它的源文件有很�
   split_lib_slice_9_apk.apk
   ```
 
-  - /data/data/：这个目录是开发者访问最多的目录，该目录下包含了app的数据信息，文件信息，数据库信息等，以包名的形式区分各个应用
-  - /data/system/：包含手机的各项系统信息
-  - /data/misc/：保存了大部分的WIFI，VPN信息
+- /data/data/：这个目录是开发者访问最多的目录，该目录下包含了app的数据信息，文件信息，数据库信息等，以包名的形式区分各个应用
+
+- /data/system/：包含手机的各项系统信息
+
+- /data/misc/：保存了大部分的WIFI，VPN信息
 
