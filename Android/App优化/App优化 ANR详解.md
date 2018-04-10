@@ -107,7 +107,7 @@ free: 296 2436 N/A 2732 //从这能看出内存所剩无几
 - IntentService；
 - Loader，常用的有CursorLoader，用于加载数据库数据。
 
-**注意：**当在使用Thread或者HandlerThread的时候应该把线程的优先级调低点，因为默认情况下Thread的优先级和UI线程是一样的，CPU在调度时还是有可能阻塞UI线程。
+注意：当在使用Thread或者HandlerThread的时候应该把线程的优先级调低点，因为默认情况下Thread的优先级和UI线程是一样的，CPU在调度时还是有可能阻塞UI线程。
 
 待验证：
 
