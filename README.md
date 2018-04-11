@@ -27,5 +27,6 @@
 《Android群英传》读书笔记
 
 - [第1章 Android体系与系统架构](https://github.com/Sunny8519/LearningNotes/blob/master/ReadingNotes/%E7%AC%AC1%E7%AB%A0%20Android%E4%BD%93%E7%B3%BB%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.md)
-- [第3章 Android控件架构与自定义控件详解]
+- [第3章 Android控件架构与自定义控件详解](https://github.com/Sunny8519/LearningNotes/blob/master/ReadingNotes/%E7%AC%AC3%E7%AB%A0%20Android%E6%8E%A7%E4%BB%B6%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6%E8%AF%A6%E8%A7%A3.md)
+
 
