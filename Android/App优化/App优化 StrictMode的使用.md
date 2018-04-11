@@ -26,9 +26,13 @@ StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .build());
 ```
 
+StrictMode一般在Application的onCreate()方法中初始化，可以用来监测应用的全局违例情况，也可以用在Activity的onCreate()方法中，具体的用法如上面所示代码，当然如果我们不想分的如上面那般细，可以使用`detectAll()`方法来监测所有情况。
 
+使用StrictMode要注意在debug模式下使用，在release版本中应该把这项功能禁止掉。
 
+StrictMode不能监控JNI层的磁盘IO和网络请求。
 
+总结：ThreadPolicy可以说是对UI线程的监控，比如在UI线程中有耗时操作，ThreadPolicy就会提醒(以日志或者弹窗的形式)；VmPolicy可以说是对内存溢出的监控，比如资源没有释放。
 
 参考文章：
 

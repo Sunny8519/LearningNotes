@@ -12,6 +12,7 @@
 
 1. App优化
    - [App优化 ANR详解](https://github.com/Sunny8519/LearningNotes/blob/master/Android/App%E4%BC%98%E5%8C%96/App%E4%BC%98%E5%8C%96%20ANR%E8%AF%A6%E8%A7%A3.md)
+   - [App优化 StrictMode使用详解](https://github.com/Sunny8519/LearningNotes/blob/master/Android/App%E4%BC%98%E5%8C%96/App%E4%BC%98%E5%8C%96%20StrictMode%E7%9A%84%E4%BD%BF%E7%94%A8.md)
 
 ## 三. Java基础
 
