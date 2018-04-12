@@ -49,7 +49,7 @@
 
 最终显示效果：
 
-![Screenshot_20180412-115124.png](https://upload-images.jianshu.io/upload_images/5231076-e993943941d2680a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img src="https://upload-images.jianshu.io/upload_images/5231076-e993943941d2680a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="50%" height="50%">
 
 #### 2. 根布局的宽高指定为wrap_content
 
@@ -85,7 +85,7 @@ xml布局如下：
 
 最终显示效果：
 
-![Screenshot_20180412-115156.png](https://upload-images.jianshu.io/upload_images/5231076-6871de4697eecede.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img src="https://upload-images.jianshu.io/upload_images/5231076-6871de4697eecede.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="50%" height="50%">
 
 #### 3. 根布局的宽高指定为match_parent
 
@@ -121,7 +121,7 @@ xml文件如下：
 
 最终显示效果图：
 
-![Screenshot_20180412-115156.png](https://upload-images.jianshu.io/upload_images/5231076-6871de4697eecede.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img src="https://upload-images.jianshu.io/upload_images/5231076-6871de4697eecede.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="50%" height="50%">
 
 #### 4. 根布局指定固定宽高，但是超出屏幕大小
 
@@ -157,7 +157,7 @@ xml文件如下：
 
 最终显示效果：
 
-![Screenshot_20180412-114406.png](https://upload-images.jianshu.io/upload_images/5231076-9bbe5db0be05941a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img src="https://upload-images.jianshu.io/upload_images/5231076-9bbe5db0be05941a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="50%" height="50%">
 
 上下左右会留出一点空隙出来。
 
