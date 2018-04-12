@@ -234,3 +234,7 @@ style文件：
 <img src="https://upload-images.jianshu.io/upload_images/5231076-c0f99d4c234bbeca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="50%" height="50%">
 
 上下同样会有间距，但是左右却不留间距了，直接充满。
+
+#### 5. 生命周期
+
+Activity的生命周期和第一种方式下的Activity一样。
