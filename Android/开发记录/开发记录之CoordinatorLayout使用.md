@@ -148,7 +148,165 @@ app:layout_behavior属性设置为`@string/appbar_scrolling_view_behavior`，它
 
 也就是ScrollingViewBehavior这个类的路径，可想而知设置这个字符串最终会通过反射拿到ScrollingViewBehavior这个对象，这个对象就是ViewPager和ToolBar联动效果的关键。
 
+效果：
+
+![20180413_115955.gif](https://upload-images.jianshu.io/upload_images/5231076-800e7774107b352c.gif?imageMogr2/auto-orient/strip)
+
 #### 4. AppBarLayout嵌套CollapsingToolbarLayout
+
+先看布局文件：
+
+````java
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:fitsSystemWindows="true">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">  //1
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:src="@android:color/holo_blue_light"
+                    app:layout_collapseMode="parallax" /> //2
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/tool_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin" //3
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"> //4
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="@string/english_text" />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+        
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            app:layout_anchor="@id/abl" //5
+            app:layout_anchorGravity="bottom|end" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
+````
+
+从布局文件中我们主要关注4个点，分别对应于注释1,2,3,4。CollapsingToolbarLayout翻译过来就是可折叠的ToolbarLayout，它是继承自FrameLayout，因此，内部布局遵循FrameLayout的规则。
+
+CollapsingToolbarLayout内部的控件可以通过app:layout_collapseMode属性来决定哪些View是随着滚动而变化的，哪些是固定在原来位置上的，如示例中的ImageView和Toolbar，属性值parallax表示视差模式，即在折叠的时候有个视差折叠的效果，这个视差值还能通过app:layout_collapseParallaxMultiplier属性改变，值范围为[0.0,1.0]，值越大视差越大。app:layout_collapseMode的属性值为pin时，表示的是固定模式。这里说的两种属性均作用于CollapsingToolbarLayout内的子View上。
+
+CollapsingToolbarLayout的其他属性：
+
+- app:contentScrim="@color/colorPrimary"：作用于CollapsingToolbarLayout上，表示折叠之后Toolbar显示的背景；
+- app:statusBarScrim="@android:color/transparent"：目前不知道有什么作用，但是把它设置透明时，当NestedScrollView向下滑动很快的时候不会出现黑条。
+
+CoordinatorLayout提供的其他属性：
+
+- app:layout_anchor="@id/appbar"：注释5处，通过该属性把CoordinatorLayout的子View与AppBarLayout关联，实现子View的隐藏和显示。
+- app:layout_anchorGravity="bottom|right|end"：设置子View的位置。
+
+效果图：
+
+![20180413_185027.gif](https://upload-images.jianshu.io/upload_images/5231076-7792a1b5dca6ab96.gif?imageMogr2/auto-orient/strip)
 
 
 
