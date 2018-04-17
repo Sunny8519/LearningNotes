@@ -150,3 +150,8 @@ inflate()
 参考文章：
 
 [View绘制详解，从LayoutInflater谈起](https://blog.csdn.net/u012702547/article/details/52614444)
+
+[三个案例带你看懂LayoutInflater中inflate方法两个参数和三个参数的区别](https://blog.csdn.net/u012702547/article/details/52628453)
+
+[Android应用setContentView与LayoutInflater加载解析机制源码分析](https://blog.csdn.net/yanbober/article/details/45970721)
+
