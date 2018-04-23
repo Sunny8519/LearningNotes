@@ -295,6 +295,7 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
                     rInflate(parser, root, inflaterContext, attrs, false);
                 } else {
                     // Temp is the root view that was found in the xml
+                    // 获取xml根布局View
                     final View temp = createViewFromTag(root, name, inflaterContext, attrs);
 
                     ViewGroup.LayoutParams params = null;
@@ -305,7 +306,8 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
                                     root);
                         }
                         // Create layout params that match root, if supplied
-                        params = root.generateLayoutParams(attrs);
+                        params = root.generateLayoutParams(attrs); //获取能够匹配父容器的LayoutParams
+                        //attachToRoot为false时会给生成的xml根View设置LayoutParams，这样xml根View设置的宽高属性就不会失效
                         if (!attachToRoot) {
                             // Set the layout params for temp if we are not
                             // attaching. (If we are, we use addView, below)
@@ -318,7 +320,7 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
                     }
 
                     // Inflate all children under temp against its context.
-                    rInflateChildren(parser, temp, attrs, true);
+                    rInflateChildren(parser, temp, attrs, true); //递归加载子布局
 
                     if (DEBUG) {
                         System.out.println("-----> done inflating children");
@@ -326,12 +328,14 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
 
                     // We are supposed to attach all the views we found (int temp)
                     // to root. Do that now.
-                    if (root != null && attachToRoot) {
+                    // root不等于null,attachToRoot为true时把xml生成的视图树add进root中
+                    if (root != null && attachToRoot) { 
                         root.addView(temp, params);
                     }
 
                     // Decide whether to return the root that was passed in or the
                     // top view found in xml.
+                    // root为null或者attachToRoot为false时把xml生成的视图树赋值给result
                     if (root == null || !attachToRoot) {
                         result = temp;
                     }
@@ -358,10 +362,6 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
         }
     }
 ```
-
-
-
-
 
 参考文章：
 
