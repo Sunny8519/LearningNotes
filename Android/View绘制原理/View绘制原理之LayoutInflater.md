@@ -295,7 +295,7 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
                     rInflate(parser, root, inflaterContext, attrs, false);
                 } else {
                     // Temp is the root view that was found in the xml
-                    final View temp = createViewFromTag(root, name, inflaterContext, attrs);
+                    final View temp = createViewFromTag(root, name, inflaterContext, attrs);//1
 
                     ViewGroup.LayoutParams params = null;
 
@@ -359,7 +359,7 @@ public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean atta
     }
 ```
 
-
+注释1这行代码
 
 
 
