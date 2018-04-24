@@ -183,7 +183,9 @@ Bitmap(long nativeBitmap, byte[] buffer, int width, int height, int density,
          byte[] ninePatchChunk, NinePatch.InsetStruct ninePatchInsets)
 ```
 
+BitmapFactory中的decodeXXX()方法的作用是读取目标文件并转换成输入流，然后调用native方法解析流，在native方法中必然会通过JNI调用Bitmap的构造函数去构建Bitmap对象。
 
+Bitmap作为位图，需要读取图片的每一个像素点，占用内存的也是这些像素点，想要计算出Bitmap占用内存的大小，我们需要知道一张图片像素的个数以及每个像素占用内存的大小。在Android中单个像素占用的内存大小由Bitmap内部枚举类Config决定。
 
 参考文章：
 
