@@ -172,3 +172,16 @@ Enter file in which to save the key (/c/Users/Liang Guan Quan/.ssh/id_rsa):
 *.iml           // 过滤指定的所有文件
 !.gitignore     // 不忽略该文件
 ```
+
+#### 4. Github上fork别人的代码并同步更新被人的提交
+
+解决方案是为本地仓库添加两个远程仓库，一个远程仓库是别人的代码仓库，一个是自己fork后的仓库，这样当别人在他的仓库中提交代码后，可以在本地更新他的仓库中的代码然后提交了自己fork的仓库中。
+
+![添加远程仓库.png](https://upload-images.jianshu.io/upload_images/5231076-3325d344273aea6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![拉取远程分支代码.png](https://upload-images.jianshu.io/upload_images/5231076-c6dfc1a47f33585f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![push到自己fork的仓库中.png](https://upload-images.jianshu.io/upload_images/5231076-89bfdbb8c54fbe62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+

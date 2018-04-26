@@ -1,4 +1,4 @@
-## App优化之Bitmap分析与使用
+## 1App优化之Bitmap分析与使用
 
 #### 1. Bitmap的创建
 
@@ -186,6 +186,74 @@ Bitmap(long nativeBitmap, byte[] buffer, int width, int height, int density,
 BitmapFactory中的decodeXXX()方法的作用是读取目标文件并转换成输入流，然后调用native方法解析流，在native方法中必然会通过JNI调用Bitmap的构造函数去构建Bitmap对象。
 
 Bitmap作为位图，需要读取图片的每一个像素点，占用内存的也是这些像素点，想要计算出Bitmap占用内存的大小，我们需要知道一张图片像素的个数以及每个像素占用内存的大小。在Android中单个像素占用的内存大小由Bitmap内部枚举类Config决定。
+
+Android8.0中又增加了RGBA_F16和HARDWARE，RGBA_F16表示每个像素点占用8个字节。
+
+我们把一张800x600的图片放到/res/drawable/文件夹下，这张图片被加载出来之后的分辨率为2400x1800，也就是说它被放大了3倍，这个缩放的过程是在native层做的，相关代码如下(BitmapFactory.cpp#nativeDecodeXXX()方法)：
+
+```java
+if (env->GetBooleanField(options, gOptions_scaledFieldID)) {
+    const int density = env->GetIntField(options, gOptions_densityFieldID);
+    const int targetDensity = env->GetIntField(options, gOptions_targetDensityFieldID);
+    const int screenDensity = env->GetIntField(options, gOptions_screenDensityFieldID);
+    if (density != 0 && targetDensity != 0 && density != screenDensity) {
+        scale = (float) targetDensity / density;
+    }
+}
+...
+int scaledWidth = decoded->width();
+int scaledHeight = decoded->height();
+
+if (willScale && mode != SkImageDecoder::kDecodeBounds_Mode) {
+    scaledWidth = int(scaledWidth * scale + 0.5f);
+    scaledHeight = int(scaledHeight * scale + 0.5f);
+}
+...
+if (willScale) {
+    const float sx = scaledWidth / float(decoded->width());
+    const float sy = scaledHeight / float(decoded->height());
+    bitmap->setConfig(decoded->getConfig(), scaledWidth, scaledHeight);
+    bitmap->allocPixels(&javaAllocator, NULL);
+    bitmap->eraseColor(0);
+    SkPaint paint;
+    paint.setFilterBitmap(true);
+    SkCanvas canvas(*bitmap);
+    canvas.scale(sx, sy);
+    canvas.drawBitmap(*decoded, 0.0f, 0.0f, &paint);
+}
+```
+
+在这部分代码中我们注意到density,targetDensity,screenDensity三个值，它们都是从Java层代码Options中获取到的，Options类是BitmapFactory的静态内部类，用于配置Bitmap在decode时的一些参数，主要参数如下：
+
+![](https://upload-images.jianshu.io/upload_images/1982126-ad1f448f84f8225e.png?imageMogr2/auto-orient/)
+
+三个密度参数的含义：
+
+- inDensity：Bitmap位图自身的密度
+- inTargetDensity：Bitmap最终绘制的目标位置的密度
+- inScreenDensity：设备屏幕的密度
+
+inDensity和图片存放的文件目录有关，同一张图片放在不同目录下会有不同的值，具体值如下：
+
+|        density        | 0.75 |  1   | 1.5  |   2   |   3    |   3.5   |    4     |
+| :-------------------: | :--: | :--: | :--: | :---: | :----: | :-----: | :------: |
+| inDensity(densityDpi) | 120  | 160  | 240  |  320  |  480   |   560   |   640    |
+|       DpiFolder       | ldpi | mdpi | hdpi | xhdpi | xxhdpi | xxxhdpi | xxxxhdpi |
+
+inTargetDensity和inScreenDensity一般很少会赋值，默认情况下，它们都是和屏幕密度保持一致，比如红米4，Android6.0系统，设备dpi480。
+
+因此Bitmap占用内存大小的计算公式为：
+
+```
+Bitmap内存占用 ≈ 像素数据总大小 = 图片宽 × 图片高× (设备分辨率/资源目录分辨率)^2 × 每个像素的字节大小
+```
+
+#### 4. Bitmap内存优化
+
+- 使用低色彩的解析模式，比如RGB_565，减少单个像素占用字节大小；
+- 资源文件合理放置，高分辨率的图片放置在高分辨率的目录下；
+- 对图片进行缩放，减小图片加载进内存的尺寸；
+- 对Bitmap缓存复用。
 
 参考文章：
 
