@@ -77,3 +77,81 @@ public void onDraw(Canvas canvas){
 }
 ```
 
+在利用LinearGradient和Matrix实现文字闪烁效果过程中：
+
+- View中onWindowFocusChanged()方法是在每次Window的焦点发生变化时被调用，比如锁屏和解除锁屏，退出和进入当前页面。
+
+以下为xml文件中的View从解析到被绘制过程中比较重要的回调方法的回调顺序：
+
+```
+onFinishInflate
+onAttachedToWindow
+onMeasure
+onMeasure
+onMeasure
+onMeasure
+onSizeChanged
+onLayout
+onWindowFocusChanged
+onDraw
+```
+
+从这个回调顺序可知，onSizeChanged()方法是在onMeasure()方法之后被回调的，也就是View的大小发生变化时回调，View一旦大小发生改变必然会触发View的重新测量，接着onSizeChanged()方法也会被回调。
+
+自定义View实现文字闪烁的关键代码如下：
+
+```java
+@Override
+protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.i(TAG, "onSizeChanged");
+
+        if (this.mViewWidth == 0) {
+            this.mViewWidth = getMeasuredWidth();
+
+            if (this.mViewWidth > 0) {
+                this.mLinearGradient = new LinearGradient(
+                        -this.mViewWidth / 2, 0,
+                        this.mViewWidth / 2, 0,
+                        new int[]{Color.BLACK, 0xffffffff, Color.BLACK},
+                        null, Shader.TileMode.CLAMP
+                );
+                getPaint().setShader(this.mLinearGradient);
+                this.mGradientMatrix = new Matrix();
+            }
+        }
+}
+
+@Override
+protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Log.i(TAG, "onDraw");
+
+        if (this.mGradientMatrix != null) {
+            this.mTranslate += this.mViewWidth / 5f;
+            if (this.mTranslate > this.mViewWidth) {
+                this.mTranslate = 0;
+            }
+
+            this.mGradientMatrix.setTranslate(this.mTranslate, 0);
+            this.mLinearGradient.setLocalMatrix(this.mGradientMatrix);
+
+            postInvalidateDelayed(100);
+        }
+}
+```
+
+postInvalidateDelayed()每次只会触发onDraw()方法。
+
+```java
+//系统命名空间
+xmlns:android="http://schemas.android.com/apk/res/android"
+
+//自定义命名空间,app也可以改为其他名称，一般用于自定View的属性
+xmlns:app="http://schemas.android.com/apk/res-auto"
+```
+
+xmlns全称为xml namespace
+
+通过组合实现新控件一般需要继承布局控件，比如LinearLayout，FrameLayout，RelativeLayout等，通过Java代码或者加载xml文件的方式实现组合控件。
+
