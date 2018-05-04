@@ -129,10 +129,15 @@ git branch
 git branch (branch-name)
 
 // 删除一个分支
-git branch -d (branch-nam)
+git branch -d <本地分支名>
+// 强制删除本地分支
+git branch -D <本地分支名>
+
 
 // 删除 remote 的分支
-git push (remote-name) :(remote-branch)
+git push <远程仓库名> :<远程分支名>
+or
+git push <远程仓库名> --delete <远程分支名>
 ```
 
 * 切换分支
@@ -145,7 +150,16 @@ git checkout [branch-name]
 git checkout -b [branch-name]
 ```
 
+- 同步远程仓库到本地
+
+```
+git fetch --all
+```
+
+
+
 ####2. 与github建立ssh通信，让Git操作免去输入密码的繁琐
+
 *   首先呢，我们先建立ssh密匙。
 > ssh key must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'.  -- from github
 
