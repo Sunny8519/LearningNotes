@@ -105,7 +105,7 @@ public static int calculateInSample(BitmapFactory.Options options, int reqWidth,
 
 - **Reuse**
 
-加载少量的图片使用上面那种方式应该就够了，但是如果要加载大量且有可能重复的图片，使用上面的方式就有点杯水车薪了，这时我们应该提供一种图片复用的功能。在BitmapFactory.Options中有一个inBitmap字段可实现已加载的Bitmap的复用(**Bitmap的复用还可以使用三级缓存来做，待补充**)，但是该字段的在Android 4.4之前使用有一定限制：即只支持同等大小的位图。
+加载少量的图片使用上面那种方式应该就够了，但是如果要加载大量且有可能重复的图片，使用上面的方式就有点杯水车薪了，这时我们应该提供一种图片复用的功能。在BitmapFactory.Options中有一个inBitmap字段可实现已加载的Bitmap的复用(**Bitmap的复用还可以使用三级缓存来做，待补充**)，但是该字段在Android 4.4之前使用有一定限制：即只支持同等大小的位图。
 
 ##### inBitmap使用方式
 
