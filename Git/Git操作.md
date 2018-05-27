@@ -56,6 +56,16 @@ git rm file.txt -cached // 从版本库中移除，不删除原始文件
 git rm -r xxx           // 从版本库中删除指定文件夹
 ```
 
+- 把本地仓库上传到Github
+
+```
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/Sunny8519/LearningViews.git
+git push -u origin master
+```
+
 * 从本地仓库中添加新的文件
 
 ```
