@@ -118,3 +118,25 @@ ldc "HelloWorld" //直接把"HelloWordl"字符串赋值给helloWorld变量，这
 putstatic 'MainKt.helloWorld','Ljava/lang/String;'
 ```
 
+#### 6. 函数
+
+Kotlin中的函数返回值默认是Unit，相当于Java中的void，在Kotlin中Unit可以不写。
+
+```kotlin
+//fun [函数名]([参数列表]):[返回值类型]{[函数体]}
+fun sum(arg1: Int, arg2: Int): Int {
+    return arg1 + arg2
+}
+
+//fun [函数名]([参数列表]) = [表达式]
+fun sum(arg1: Int, arg2: Int) = arg1 + arg2
+fun sum(arg1: Int, arg2: Int): Int = arg1 + arg2
+
+//匿名函数
+val s = fun(arg1: Int, arg2: Int): Int {
+    return arg1 + arg2
+}
+```
+
+#### 7. Lambda表达式
+
