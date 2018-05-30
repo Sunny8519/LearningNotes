@@ -155,3 +155,7 @@ xmlns全称为xml namespace
 
 通过组合实现新控件一般需要继承布局控件，比如LinearLayout，FrameLayout，RelativeLayout等，通过Java代码或者加载xml文件的方式实现组合控件。
 
+在开发组合控件的过程中，我们应该要注意例如RelativeLayout.LayoutParams等类的定义，通常这些LayoutParams类提供了我们在代码中设置控件在ViewGroup中位置的方法。比如RelativeLayout.LayoutParams类中的addRule()方法。
+
+
+
