@@ -1,6 +1,6 @@
 ## 第3章 Android控件架构与自定义控件详解
 
-#### 1. Android控件架构
+### 1. Android控件架构
 
 在Activity中使用findViewById()是在视图树种以树的深度优先遍历来查找对应元素。
 
@@ -8,7 +8,7 @@
 
 通过requestWindowFeature(Window.FEATURE_NO_TITLE)来设置全屏，该方法的调用需要在setContentView()之前。
 
-#### 2. View的测量
+### 2. View的测量
 
 View的测量是在onMeasure()方法种进行的。
 
@@ -22,7 +22,7 @@ View默认情况下只对EXACTLY有效，因此我们想要自定义的View也�
 
 如果自定义View不重写onMeasure()方法，为该View指定wrap_content时会填充整个父布局。
 
-#### 3. View的绘制
+### 3. View的绘制
 
 View中Canvas属于系统2D绘图。
 
@@ -43,7 +43,7 @@ public void onDraw(Canvas canvas){
 }
 ```
 
-#### 4. ViewGroup的测量
+### 4. ViewGroup的测量
 
 **ViewGroup是子View的容器，当ViewGroup的大小为wrap_content的时候，ViewGroup需要对子View进行遍历去获得所有子View的大小，然后决定自己的大小，在其他模式下则会通过指定值来设置自身的大小。**
 
@@ -53,7 +53,7 @@ ViewGroup一般不会覆写onDraw或者dispathDraw()方法，但是某些情况�
 
 ViewGroup的onDraw()方法需要在指定背景颜色时才会被调用(**这点待验证**)，但是ViewGroup会通过dispatchDraw()方法来绘制子View，因此如果我们想在ViewGroup中绘制一些内容的话可以覆写dispatchDraw()方法来进行绘制，有一点需要注意的是一定要在覆写的dispatchDraw()方法中调用父类的dispatchDraw()方法。
 
-#### 5. 自定义View
+### 5. 自定义View
 
 View中比较重要的回调方法：
 
@@ -156,6 +156,28 @@ xmlns全称为xml namespace
 通过组合实现新控件一般需要继承布局控件，比如LinearLayout，FrameLayout，RelativeLayout等，通过Java代码或者加载xml文件的方式实现组合控件。
 
 在开发组合控件的过程中，我们应该要注意例如RelativeLayout.LayoutParams等类的定义，通常这些LayoutParams类提供了我们在代码中设置控件在ViewGroup中位置的方法。比如RelativeLayout.LayoutParams类中的addRule()方法。
+
+#### 5.1 自定义音频View
+
+#### 5.2 自定义ViewPager效果的ViewGroup(上下翻动)
+
+### 6. 事件拦截机制
+
+事件拦截机制中涉及三个方法：
+
+- dispatchTouchEvent()
+- onInterceptTouchEvent()
+- onTouchEvent()
+
+三个方法在默认情况下都是返回false。
+
+dispatchTouchEvent()方法是事件分发的第一个方法，一般情况下，我们不会去覆写这个方法，其余两个方法都是在该方法中被调用的。
+
+dispatchTouchEvent()和onInterceptTouchEvent()方法可以理解成事件分发过程中的方法，事件分发完后就需要处理事件，那么事件的处理就是在onTouchEvent()方法中进行的。在一个ViewGroup中，如果经过它的事件被拦截了，那么拦截之后的所有事件都会交由这个ViewGroup的onTouchEvent()方法处理(在一个事件序列中)。
+
+理解事件分发可以依据我们身边的例子：假设公司有项目经理、Android组长、开发(你)三个角色，项目经理是ViewGroupA，Android组长是ViewGroupB，开发是View。那么现在有一项开发任务(类比于一个事件)需要去开发，项目经理会先把任务布置下去(也就是事件分发)，Android组长收到这个任务(事件从ViewGroupA传到了ViewGroupB)，Android组长再把任务交给它的下属(这样事件就来到了View)，到此，可以理解成一个事件的分发过程。拿到任务之后，就要进行开发了(事件的处理)，这个任务可能很容易，也可能很难，如果容易的话，作为开发的你轻而易举的解决了，就不用向上级反馈你在开发中遇到了阻碍了(你处理不了)，但是如果很难，你解决不了，你就要向上级报告任务困难，能力有限，问题解决不了(View的onTouchEvent()返回了false，事件交由ViewGroupB的onTouchEvent()方法处理)，这时，Android组长发现这个任务确实有点难，他也解决不了，怎么办，它也需要向上级报告，让上级去处理(ViewGroupB的onTouchEvent()方法返回false，事件交由ViewGroupA处理)。
+
+
 
 
 

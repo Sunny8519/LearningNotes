@@ -81,4 +81,25 @@ public interface FileFilter {
 
 FileFilter是一个接口，该接口的功能就是实现文件的筛选条件，因此，我们在调用listFiles(FileFilter)方法的时候需要自己实现一个FileFilter对象。
 
-视频15
+判断文件是否为文件夹：`File.isDirectory()`
+
+```java
+private static void traversalDir(File dir) {
+        File[] files = dir.listFiles();
+        if (files == null) return;
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                traversalDir(file);
+            } else {
+                System.out.println(file);
+            }
+        }
+    }
+```
+
+上面这种写法就是递归遍历所有的文件夹，并打印出所有的文件。
+
+递归调用中一定要有出口，不然肯定会出现死循环，并且递归调用的次数不能过多，过多的话很可能出现StackOverFlowError。
+
+接下来看18
