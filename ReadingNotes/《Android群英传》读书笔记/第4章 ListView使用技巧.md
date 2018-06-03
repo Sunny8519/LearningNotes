@@ -168,5 +168,28 @@ protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY,
 
 #### 10.2 自动显示、隐藏布局的ListView
 
-实现这一效果
+实现自动显示，隐藏布局的ListView的思路：
 
+- 通过捕捉滑动事件来判断当前的滑动是向上还是向下。要做到这一点我们可以通过覆写onTouchEvent()或者设置OnTouchListener()来实现；
+- 获取手指的滑动方向之后，就需要对要显示和隐藏的布局做相应的动画就可以了，比如Toolbar在上滑的时候隐藏，下滑的时候显示，这都可以通过Toolbar的translationY属性做到；
+- 实现过程中我们应该要注意一点是不论下滑还是上滑，View的显示隐藏动画都应该只开启一次，并且在下一次动画开始之前应该把前一次的动画关闭。不然的话会造成我们在滑动的过程中不断开启动画，可能导致内存泄漏，这是非常危险的。
+
+#### 10.3 多种Item布局的ListView
+
+实现多种Item布局的关键在于我们继承自BaseAdapter的实现类，还应该覆写两个方法：
+
+- getItemViewType(int position)：根据Item位置判断显示的Item类型，我觉得这块应该跟getView()方法中的convertView是否为空有关，猜测的依据：ListView是有Item缓存机制的，但是当Item有多重类型的布局时，它应该对多种类型的布局都应该有缓存，不可能只缓存一种类型的Item布局。
+- getViewTypeCount()：返回有多少种Ite布局类型
+
+另外，在getView()方法中，我们还应该根据不同的Type去实例化不同的布局和ViewHoler。
+
+#### 10.4 动态改变ListView布局
+
+这里的动态改变ListView布局在开发中不建议使用，它的做法是在getView()方法中去动态的构建布局，比如new LinearLayout，然后new TextView，把TextView加入到LinearLayout中，把LinearLayout作为返回值返回。这样是没有利用ListView的布局缓存的，每次调用getView()都会重新构建布局，性能不好。
+
+```java
+adapter.setCurrentItem(int);
+adapter.notifyDataSetChanged();
+```
+
+上面两行代码能够触发BaseAdapter的getView()方法，并且方法参数position为设置进去的整数值，相当于重新构建了position位置的布局。
