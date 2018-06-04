@@ -102,4 +102,63 @@ private static void traversalDir(File dir) {
 
 递归调用中一定要有出口，不然肯定会出现死循环，并且递归调用的次数不能过多，过多的话很可能出现StackOverFlowError。
 
-接下来看18
+### 6. 利用递归实现阶乘
+
+计算阶乘5!
+
+```java
+private int factorial(int n){
+    if(n == 1){
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+factorial(5);//5!
+```
+
+### 7. 斐波那契数列
+
+```java
+1 1 2 3 5 8 13
+```
+
+类似于上面这种规律的数列就是斐波拉契数列，每项是前面两项之和(除了前两项)。
+
+使用递归实现斐波拉契数列：
+
+```java
+private int getFBLQ(int n){
+    if(n == 1 || n == 2){
+        return 1;
+    }
+    return getFBLQ(n-1)+getFBLQ(n-2);
+}
+```
+
+### 8. 利用递归和FileFilter实现过滤Java文件
+
+```java
+   private static void traversalDir(File dir) {
+        File[] files = dir.listFiles(new CustomFilenameFilter());
+        if (files == null) return;
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                traversalDir(file);
+            } else {
+                System.out.println(file);
+            }
+        }
+    }
+
+    static class CustomFilenameFilter implements FilenameFilter {
+
+        @Override
+        public boolean accept(File dir, String name) {
+            return dir.isDirectory() || name.toLowerCase().endsWith(".java");
+        }
+
+    }
+```
+

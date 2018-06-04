@@ -9,6 +9,6 @@
 
 如何避免后台进程被杀死：
 
-1. 调用startForegound，让你的Service所在的线程成为前台进程
+1. 调用startForegound，让你的Service所在的进程成为前台进程
 2. Service的onStartCommond返回START_STICKY或START_REDELIVER_INTENT
 3. Service的onDestroy里面重新启动自己
