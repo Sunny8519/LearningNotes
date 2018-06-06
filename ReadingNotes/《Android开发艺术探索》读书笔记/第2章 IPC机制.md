@@ -9,4 +9,5 @@ Serializable接口是一个空接口，它提供了一种标准，意思就是�
 - bean类实现Serializable接口(implements)；
 - 指定serialVersionUID；
 
-其实serialVersionUID可以不用指定，但是指定serialVersionUID可以最大限度的增加反序列化的成功率...
+其实serialVersionUID可以不用指定，但是指定serialVersionUID可以最大限度的增加反序列化的成功率
+
