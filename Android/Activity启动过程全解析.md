@@ -221,13 +221,11 @@ public final class SystemServer {
 Intent intent = new Intent(Intent.ACTION_MAIN);  
 intent.addCategory(Intent.CATEGORY_LAUNCHER);              
 ComponentName cn = new ComponentName(packageName, className);              
-intent.setComponent(cn);  
-startActivity(intent); 
+intent.setComponent(cn);
+startActivity(intent);
 ```
 
 但是，我们的App通过调用startActivity()并不能直接打开另外一个App，这个方法会通过一系列的调用，最后还是告诉AMS说：“我要打开这个App，我知道他的住址和名字，你帮我打开吧！”所以是AMS来通知zygote进程来fork一个新进程，来开启我们的目标App的。这就像是浏览器想要打开一个超链接一样，浏览器把网页地址发送给服务器，然后还是服务器把需要的资源文件发送给客户端的。
-
-知道了Android Framework的客户端服务器架构之后，我们还需要了解一件事情，那就是我们的App和AMS(SystemServer进程)还有zygote进程分属于三个独立的进程，他们之间如何通信呢？
 
 知道了Android Framework的客户端服务器架构之后，我们还需要了解一件事情，那就是我们的App和AMS(SystemServer进程)还有zygote进程分属于三个独立的进程，他们之间如何通信呢？
 
@@ -258,7 +256,7 @@ Launcher实现了点击、长按等回调接口，来接收用户的输入。既
 
 那么到底是处理的哪个对象的点击事件呢？既然Launcher是App，并且有界面，那么肯定有布局文件呀，是的，我找到了布局文件launcher.xml
 
-```
+```java
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res/com.android.launcher"
@@ -392,7 +390,7 @@ startActivitySafely(v, intent, tag);
 
 com.android.launcher2.AppsCustomizePagedView.java
 
-```
+```java
 /**
  * The Apps/Customize page that displays all the applications, widgets, and shortcuts.
  */
@@ -558,7 +556,7 @@ Instrumentation意为“仪器”，我们先看一下这个类里面包含哪�
 
 我们可以看到，这个类里面的方法大多数和Application和Activity有关，是的，这个类就是完成对Application和Activity初始化和生命周期的工具类。比如说，我单独挑一个callActivityOnCreate()让你看看
 
-```
+```java
 public void callActivityOnCreate(Activity activity, Bundle icicle) {
         prePerformCreate(activity);
         activity.performCreate(icicle);
