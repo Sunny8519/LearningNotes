@@ -11,3 +11,10 @@ Serializable接口是一个空接口，它提供了一种标准，意思就是�
 
 其实serialVersionUID可以不用指定，但是指定serialVersionUID可以最大限度的增加反序列化的成功率
 
+https://www.ibm.com/developerworks/cn/java/j-lo-serial/
+
+https://blog.csdn.net/dreamtdp/article/details/15378329
+
+https://www.cnblogs.com/huhx/p/sSerializableTheory.html
+
+http://longdick.iteye.com/blog/458557
